@@ -12,9 +12,10 @@
 
 #Define the program
 NAME		= ft_select
-_SRC		=
+_SRC		=	ft_init.c\
+				ft_select.c
 SRC			= $(addprefix srcs/,$(_SRC))
-CFLAGS		= -Wall -Wextra -Werror -ggdb -g
+CFLAGS		= -Wall -Wextra -Werror
 LIBFT		= -Llibft -lft -Ilibft
 
 all: $(NAME)

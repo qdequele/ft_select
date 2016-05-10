@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_select.c                                        :+:      :+:    :+:   */
+/*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qdequele <qdequele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,34 +12,36 @@
 
 #include "ft_select.h"
 
-void	ft_show_list(t_list *list)
+static t_item	*create_item(char *name)
 {
-	t_list	*elem;
 	t_item	*item;
-	int		i;
 
-	elem = list;
-	i = 0;
-	if (elem && elem->content)
-	{
-		while (elem)
-		{
-			item = (t_item *)elem->content;
-			ft_putstr(item->name);
-			ft_putstr(" : ");
-			ft_putendl(ft_itoa(item->selected));
-			elem = elem->next;
-			i++;
-		}
-	}
+	item = (t_item *)malloc(sizeof(t_item));
+	item->name = ft_strdup(name);
+	item->selected = 0;
+	return (item);
 }
 
-int			main(int argc, char **argv)
+int			ft_init_term(t_env *env, int argc, char **argv)
 {
-	t_env	*env;
+	if (tcgetattr(0, env->term) == -1)
+		return (0);
+	
+}
 
-	env = (t_env *)malloc(sizeof(t_env));
-	ft_init_env(env, argc, argv);
-	ft_show_list(env->list);
-	return (0);
+int			ft_init_env(t_env *env, int argc, char **argv)
+{
+	int		i;
+
+	i = 1;
+	env->list = NULL;
+	while (i < argc)
+	{
+		ft_lstaddend(&env->list, ft_lstnew(create_item(argv[i]), sizeof(t_item)));
+		i++;
+	}
+	if (ft_lstcount(env->list) == 0)
+		return (0);
+	else
+		return (1);
 }
