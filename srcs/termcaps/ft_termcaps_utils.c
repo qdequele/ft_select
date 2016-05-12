@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_select.c                                        :+:      :+:    :+:   */
+/*   termcaps_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qdequele <qdequele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,48 +12,23 @@
 
 #include "ft_select.h"
 
-t_env	*ft_get_static_env(void)
+int		ft_tputs(int c)
 {
-	static t_env	env;
-	return (&env);
+	c = (char)c;
+	write(1, &c, 1);
+	return (1);
 }
 
-void	ft_show_list(t_list *list)
+int		ft_termcaps_move_to(t_env *env, int x, int y)
 {
-	t_list	*elem;
-	t_item	*item;
-	int		i;
-
-	elem = list;
-	i = 0;
-	if (elem && elem->content)
-	{
-		while (elem)
-		{
-			item = (t_item *)elem->content;
-			ft_putstr(item->name);
-			ft_putstr(" : ");
-			ft_putendl(ft_itoa(item->selected));
-			elem = elem->next;
-			i++;
-		}
-	}
-}
-
-int			main(int argc, char **argv)
-{
-	t_env	*env;
-
-	env = ft_get_static_env();
-	ft_init_env(env, argc, argv);
-	ft_init_term(env);
-	ft_init_sig();
-	ft_event_resize_screen(0);
-	while (1)
-	{
-		tputs(CLSTR, 0, ft_tputs);
-		ft_termcaps_catch_key(env);
-	}
-	ft_reset_term(env);
-	return (0);
+	if (((env->current_col + x) * env->col_width) > env->win_width)
+		env->current_col = 0;
+	else
+		env->current_col += x;
+	if ((env->current_line + y) > env->win_height)
+		env->current_line = 0;
+	else
+		env->current_line += y;
+	tputs(tgoto(CMSTR, (env->current_col * env->col_width), env->current_line), 1, ft_tputs);
+	return (1);
 }
