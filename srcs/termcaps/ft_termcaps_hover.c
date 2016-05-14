@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_termcaps_utils.c                                :+:      :+:    :+:   */
+/*   ft_termcaps_mhover.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qdequele <qdequele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,9 +12,29 @@
 
 #include "ft_select.h"
 
-int		ft_tputs(int c)
+static char	*ft_get_name_at_index(t_env *env, int index)
 {
-	c = (char)c;
-	write(1, &c, 1);
-	return (1);
+	t_list	*tmp_lst;
+	int		i;
+
+	i = 0;
+	tmp_lst = env->list;
+	while (tmp_lst && tmp_lst->content)
+	{
+		if (i == index)
+			return ((((t_item *)tmp_lst->content)->name));
+		i++;
+		tmp_lst = tmp_lst->next;
+	}
+	return (NULL);
+}
+
+void	ft_hover(void (*f)(void))
+{
+	t_env	*env;
+	int		index;
+
+	env = ft_get_static_env();
+	index = (env->current_col * env->wins.ws_row) + env->current_line;
+
 }

@@ -13,10 +13,13 @@
 #Define the program
 NAME		= ft_select
 _SRC		=	termcaps/ft_termcaps_key.c\
+				termcaps/ft_termcaps_move.c\
+				termcaps/ft_termcaps_select.c\
 				termcaps/ft_termcaps_utils.c\
 				ft_event.c\
 				ft_init.c\
-				ft_select.c
+				ft_select.c\
+				ft_utils.c
 SRC			= $(addprefix srcs/,$(_SRC))
 CFLAGS		= -Wall -Wextra -Werror
 LIBFT		= -Llibft -lft -Ilibft -lncurses

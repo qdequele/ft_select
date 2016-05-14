@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_select.c                                        :+:      :+:    :+:   */
+/*   ft_termcaps_select.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qdequele <qdequele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,31 +12,45 @@
 
 #include "ft_select.h"
 
-t_env	*ft_get_static_env(void)
+static void	ft_set_selected(t_env *env)
 {
-	static t_env	env;
-	return (&env);
+	int		i;
+	t_list	*tmp_lst;
+
+	tmp_lst = env->list;
+	i = 0;
+	while (tmp_lst && tmp_lst->content)
+	{
+		if (i == (env->current_col * env->wins.ws_row) + env->current_line)
+		{
+			if (((t_item *)tmp_lst->content)->selected == 0)
+			{
+				((t_item *)tmp_lst->content)->selected = 1;
+				env->count_select++;
+			}
+			else
+			{
+				((t_item *)tmp_lst->content)->selected = 0;
+				env->count_select--;
+			}
+		}
+		i++;
+		tmp_lst = tmp_lst->next;
+	}
 }
 
-int			main(int argc, char **argv)
+void	ft_select(void)
 {
 	t_env	*env;
+	int	tmp_current_col;
+	int tmp_current_line;
 
 	env = ft_get_static_env();
-	if (argc == 1)
-	{
-		ft_putendl("ft_select need arguments");
-		return (1);
-	}
-	ft_init_env(env, argc, argv);
-	ft_init_term(env);
-	ft_init_sig();
-	ft_event_resize_screen(0);
+	tmp_current_line = env->current_line;
+	tmp_current_col = env->current_col;
+	ft_set_selected(env);
 	ft_show_list();
-	while (1)
-	{
-		ft_termcaps_catch_key();
-	}
-	ft_reset_term(env);
-	return (0);
+	env->current_line = tmp_current_line;
+	env->current_col = tmp_current_col;
+	ft_termcaps_move_bottom();
 }

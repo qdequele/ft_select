@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   termcaps_key.c                                     :+:      :+:    :+:   */
+/*   ft_termcaps_key.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qdequele <qdequele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,30 +12,29 @@
 
 #include "ft_select.h"
 
-int		ft_termcaps_catch_key(t_env *env)
+int		ft_termcaps_catch_key(void)
 {
 	char	buf[3];
 
 	ft_bzero(buf, 3);
 	read(0, buf, 3);
-	// printf("%d - %d - %d\n", buf[0], buf[1], buf[2]);
 	if (TOP)
-		ft_termcaps_move_to(env, 0, -1);
+		ft_termcaps_move_top();
 	else if (BOTTOM)
-		ft_termcaps_move_to(env, 0, 1);
+		ft_termcaps_move_bottom();
 	else if (RIGHT)
-		ft_termcaps_move_to(env, 1, 0);
+		ft_termcaps_move_right();
 	else if (LEFT)
-		ft_termcaps_move_to(env, -1, 0);
+		ft_termcaps_move_left();
 	else if (SPACE)
-		printf("SPACE\n");
+		ft_select();
 	else if (BACK_SPACE)
 		printf("BACK_SPACE\n");
 	else if (DELETE)
 		printf("DELETE\n");
 	else if (ENTER)
-		printf("ENTER\n");
+		ft_show_list_selected();
 	else if (ECHAP)
-		ft_reset_term(env);
+		ft_event_exit(0);
 	return (1);
 }
