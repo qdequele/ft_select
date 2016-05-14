@@ -35,6 +35,14 @@ void	ft_hover(void (*f)(void))
 	int		index;
 
 	env = ft_get_static_env();
-	index = (env->current_col * env->wins.ws_row) + env->current_line;
 
+	index = (env->current_col * env->wins.ws_row) + env->current_line;
+	tputs(UESTR, 0, ft_tputs);
+	ft_putstr(ft_get_name_at_index(env, index));
+	f();
+	index = (env->current_col * env->wins.ws_row) + env->current_line;
+	tputs(USSTR, 0, ft_tputs);
+	ft_putstr(ft_get_name_at_index(env, index));
+	tputs(UESTR, 0, ft_tputs);
+	tputs(tgoto(CMSTR, (env->current_col * env->col_width), env->current_line), 1, ft_tputs);
 }

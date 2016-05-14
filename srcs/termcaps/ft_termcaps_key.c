@@ -19,13 +19,13 @@ int		ft_termcaps_catch_key(void)
 	ft_bzero(buf, 3);
 	read(0, buf, 3);
 	if (TOP)
-		ft_termcaps_move_top();
+		ft_hover(ft_termcaps_move_top);
 	else if (BOTTOM)
-		ft_termcaps_move_bottom();
+		ft_hover(ft_termcaps_move_bottom);
 	else if (RIGHT)
-		ft_termcaps_move_right();
+		ft_hover(ft_termcaps_move_right);
 	else if (LEFT)
-		ft_termcaps_move_left();
+		ft_hover(ft_termcaps_move_left);
 	else if (SPACE)
 		ft_select();
 	else if (BACK_SPACE)

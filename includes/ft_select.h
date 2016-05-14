@@ -70,6 +70,7 @@ typedef struct	s_env
 */
 int			ft_tputs(int c);
 int			ft_termcaps_catch_key(void);
+void		ft_hover(void (*f)(void));
 /*
 **	termcaps_move.c
 */

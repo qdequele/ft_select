@@ -38,7 +38,8 @@ int				ft_init_term(t_env *env)
 	env->term.c_cc[VTIME] = 0;
 	if (tcsetattr(0, TCSANOW, &(env->term)) == -1)
 		return (-1);
-	tputs(tgetstr("cl", NULL), 0, ft_tputs);
+	tputs(CLSTR, 0, ft_tputs);
+	tputs(VISTR, 0, ft_tputs);
 	return (1);
 }
 
@@ -50,6 +51,7 @@ int				ft_reset_term(t_env *env)
 	if (tcsetattr(0, 0, &(env->term)) == -1)
 		return (-1);
 	tputs(CLSTR, 0, ft_tputs);
+	tputs(VESTR, 0, ft_tputs);
 	return (1);
 }
 

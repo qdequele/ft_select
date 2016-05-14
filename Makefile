@@ -12,7 +12,8 @@
 
 #Define the program
 NAME		= ft_select
-_SRC		=	termcaps/ft_termcaps_key.c\
+_SRC		=	termcaps/ft_termcaps_hover.c\
+				termcaps/ft_termcaps_key.c\
 				termcaps/ft_termcaps_move.c\
 				termcaps/ft_termcaps_select.c\
 				termcaps/ft_termcaps_utils.c\

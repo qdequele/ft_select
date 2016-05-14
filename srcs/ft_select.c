@@ -33,6 +33,7 @@ int			main(int argc, char **argv)
 	ft_init_sig();
 	ft_event_resize_screen(0);
 	ft_show_list();
+	ft_hover(ft_termcaps_move_start);
 	while (1)
 	{
 		ft_termcaps_catch_key();
