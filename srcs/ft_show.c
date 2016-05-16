@@ -12,17 +12,6 @@
 
 #include "ft_select.h"
 
-void	ft_get_col_li(void)
-{
-	t_env	*env;
-
-	env = ft_get_static_env();
-	env->nb_col = (ft_lstcount(env->list) / env->wins.ws_row);
-	env->last_col = ft_lstcount(env->list) % env->wins.ws_row;
-	if (env->last_col != 0)
-		env->nb_col++;
-}
-
 void	ft_show_list(void)
 {
 	t_list	*elem;
@@ -77,4 +66,39 @@ void	ft_show_list_selected(void)
 		}
 	}
 	exit(0);
+}
+
+static void		ft_print_error_empty(t_env *env)
+{
+	ft_print_n_time('*', env->wins.ws_col);
+	ft_putchar('\n');
+	ft_print_n_time('*', (env->wins.ws_col - 11) / 2);
+	ft_putstr(" ft_select ");
+	ft_print_n_time('*', (env->wins.ws_col - 11) / 2);
+	ft_putchar('\n');
+	ft_print_n_time('*', env->wins.ws_col);
+	ft_putchar('\n');
+	ft_print_n_time(' ', (env->wins.ws_col - 60) / 2);
+	ft_putstr(" Desoler la liste est vide. ECHAP pour quitter le programme ! ");
+	ft_print_n_time(' ', (env->wins.ws_col - 60) / 2);
+	ft_putchar('\n');
+}
+
+void	ft_show_empty_list(void)
+{
+	t_env	*env;
+	char	buf[3];
+
+	env = ft_get_static_env();
+	if (ft_lstcount(env->list) == 0)
+	{
+		ft_print_error_empty(env);
+		while (1)
+		{
+			ft_bzero(buf, 3);
+			read(0, buf, 3);
+			if (ECHAP)
+				ft_event_exit(0);
+		}
+	}
 }

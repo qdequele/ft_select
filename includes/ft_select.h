@@ -71,6 +71,8 @@ typedef struct	s_env
 int			ft_tputs(int c);
 int			ft_termcaps_catch_key(void);
 void		ft_hover(void (*f)(void));
+void		ft_termcaps_remove(void);
+void		ft_get_col_li(void);
 /*
 **	termcaps_move.c
 */
@@ -79,6 +81,7 @@ void		ft_termcaps_move_bottom(void);
 void		ft_termcaps_move_top(void);
 void		ft_termcaps_move_left(void);
 void		ft_termcaps_move_right(void);
+void		ft_termcaps_move_stay(void);
 /*
 **	termcaps_select.c
 */
@@ -98,5 +101,5 @@ t_env		*ft_get_static_env(void);
 void		ft_init_sig(void);
 void		ft_show_list(void);
 void		ft_show_list_selected(void);
-void		ft_get_col_li(void);
+void		ft_show_empty_list(void);
 #endif

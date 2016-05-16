@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_termcaps_select.c                               :+:      :+:    :+:   */
+/*   ft_termcaps_remove.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qdequele <qdequele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,45 +12,50 @@
 
 #include "ft_select.h"
 
-static void	ft_set_selected(t_env *env)
+static void	ft_remove_at_index(t_list **head, int index)
 {
+	t_list	*temp;
+	t_list	*prev;
 	int		i;
-	t_list	*tmp_lst;
 
-	tmp_lst = env->list;
+	temp = *head;
 	i = 0;
-	while (tmp_lst && tmp_lst->content)
+	if (temp != NULL && index == 0)
 	{
-		if (i == (env->current_col * env->wins.ws_row) + env->current_line)
-		{
-			if (((t_item *)tmp_lst->content)->selected == 0)
-			{
-				((t_item *)tmp_lst->content)->selected = 1;
-				env->count_select++;
-			}
-			else
-			{
-				((t_item *)tmp_lst->content)->selected = 0;
-				env->count_select--;
-			}
-		}
-		i++;
-		tmp_lst = tmp_lst->next;
+		*head = temp->next;
+		free(temp);
+		return ;
 	}
+	while (temp != NULL && i != index)
+	{
+		prev = temp;
+		temp = temp->next;
+		i++;
+	}
+	if (temp == NULL)
+		return ;
+	prev->next = temp->next;
+	free(temp);
 }
 
-void	ft_select(void)
+void	ft_termcaps_remove(void)
 {
 	t_env	*env;
-	int	tmp_current_col;
-	int tmp_current_line;
+	int		tmp_current_col;
+	int		tmp_current_line;
+	int		index;
 
 	env = ft_get_static_env();
 	tmp_current_line = env->current_line;
 	tmp_current_col = env->current_col;
-	ft_set_selected(env);
+	index = (env->current_col * env->wins.ws_row) + env->current_line;
+	ft_remove_at_index(&env->list, index);
 	ft_show_list();
 	env->current_line = tmp_current_line;
 	env->current_col = tmp_current_col;
-	ft_hover(ft_termcaps_move_bottom);
+	if (index >= ft_lstcount(env->list))
+		ft_termcaps_move_top();
+	ft_termcaps_move_stay();
+	ft_hover(ft_termcaps_move_stay);
+	ft_get_col_li();
 }

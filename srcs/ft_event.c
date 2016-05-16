@@ -12,18 +12,6 @@
 
 #include "ft_select.h"
 
-static void		ft_print_n_time(char c, int n)
-{
-	int	i;
-
-	i = 1;
-	while (i < n)
-	{
-		ft_putchar(c);
-		i++;
-	}
-}
-
 static void		ft_print_error_size(t_env *env)
 {
 	ft_print_n_time('*', env->wins.ws_col);

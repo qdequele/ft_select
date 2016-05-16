@@ -28,6 +28,7 @@
 # define LIGHT_MAGENTA "\e[95m"
 # define LIGHT_CYAN "\e[96m"
 
+void	ft_print_n_time(char c, int n);
 void	ft_putchar(char c);
 void	ft_putchar_c(char *color, char c);
 void	ft_putchar_fd(char c, int fd);

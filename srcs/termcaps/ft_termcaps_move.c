@@ -57,7 +57,7 @@ void	ft_termcaps_move_top(void)
 		}
 		else
 		{
-			env->current_line = env->wins.ws_row;
+			env->current_line = env->wins.ws_row - 1;
 			env->current_col--;
 		}
 	}

@@ -15,14 +15,15 @@ NAME		= ft_select
 _SRC		=	termcaps/ft_termcaps_hover.c\
 				termcaps/ft_termcaps_key.c\
 				termcaps/ft_termcaps_move.c\
+				termcaps/ft_termcaps_remove.c\
 				termcaps/ft_termcaps_select.c\
 				termcaps/ft_termcaps_utils.c\
 				ft_event.c\
 				ft_init.c\
 				ft_select.c\
-				ft_utils.c
+				ft_show.c
 SRC			= $(addprefix srcs/,$(_SRC))
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -ggdb -g
 LIBFT		= -Llibft -lft -Ilibft -lncurses
 
 all: $(NAME)

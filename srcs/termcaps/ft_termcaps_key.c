@@ -16,6 +16,7 @@ int		ft_termcaps_catch_key(void)
 {
 	char	buf[3];
 
+	ft_show_empty_list();
 	ft_bzero(buf, 3);
 	read(0, buf, 3);
 	if (TOP)
@@ -28,10 +29,8 @@ int		ft_termcaps_catch_key(void)
 		ft_hover(ft_termcaps_move_left);
 	else if (SPACE)
 		ft_select();
-	else if (BACK_SPACE)
-		printf("BACK_SPACE\n");
-	else if (DELETE)
-		printf("DELETE\n");
+	else if (BACK_SPACE || DELETE)
+		ft_termcaps_remove();
 	else if (ENTER)
 		ft_show_list_selected();
 	else if (ECHAP)

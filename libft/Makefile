@@ -63,7 +63,7 @@ FT_PARSER_SRC_O		=	$(addprefix bin/,$(_FT_PARSER_SRC_O))
 #Define FT_PRINT
 _FT_PRINT_SRC		=	ft_putendl.c ft_putchar.c ft_putstr.c ft_putnbr.c\
 						ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c\
-						ft_putnbr_fd.c ft_puttab.c
+						ft_putnbr_fd.c ft_puttab.c ft_print_n_time.c
 
 FT_PRINT_SRC		=	$(addprefix ft_print/,$(_FT_PRINT_SRC))
 _FT_PRINT_SRC_O		=	$(patsubst %.c,%.o, $(_FT_PRINT_SRC))
