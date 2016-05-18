@@ -20,11 +20,11 @@ void	ft_show_list(void)
 
 	env = ft_get_static_env();
 	elem = env->list;
-	tputs(CLSTR, 0, ft_tputs);
 	ft_termcaps_move_start();
+	tputs(CLSTR, 0, ft_tputs);
 	if (elem && elem->content)
 	{
-		while (elem)
+		while (elem && elem->content)
 		{
 			item = (t_item *)elem->content;
 			if (item->selected == 1)

@@ -52,5 +52,6 @@ void	ft_select(void)
 	ft_show_list();
 	env->current_line = tmp_current_line;
 	env->current_col = tmp_current_col;
-	ft_hover(ft_termcaps_move_bottom);
+	ft_termcaps_move_bottom();
+	ft_hover(ft_termcaps_move_stay);
 }

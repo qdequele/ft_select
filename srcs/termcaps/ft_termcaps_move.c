@@ -48,7 +48,7 @@ void	ft_termcaps_move_top(void)
 	t_env	*env;
 
 	env = ft_get_static_env();
-	if ((env->current_line - 1) < 0)
+	if ((env->current_line - 1) <= 0)
 	{
 		if (env->current_col == 0)
 		{

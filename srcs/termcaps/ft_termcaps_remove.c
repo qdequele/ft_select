@@ -54,7 +54,7 @@ void	ft_termcaps_remove(void)
 	env->current_line = tmp_current_line;
 	env->current_col = tmp_current_col;
 	if (index >= ft_lstcount(env->list))
-		ft_termcaps_move_top();
+		ft_hover(ft_termcaps_move_top);
 	ft_termcaps_move_stay();
 	ft_hover(ft_termcaps_move_stay);
 	ft_get_col_li();
