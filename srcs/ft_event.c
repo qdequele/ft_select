@@ -46,6 +46,7 @@ void			ft_event_resize_screen(int i)
 		{
 			ft_termcaps_move_start();
 			ft_show_list();
+			ft_hover(ft_termcaps_move_stay);
 		}
 	}
 }
@@ -58,4 +59,30 @@ void			ft_event_exit(int i)
 	env = ft_get_static_env();
 	ft_reset_term(env);
 	exit (0);
+}
+
+void			ft_event_background(int i)
+{
+	t_env	*env;
+	char	cp[2];
+
+	(void)i;
+	cp[0] = ft_get_static_env()->term.c_cc[VSUSP];
+	cp[1] = '\0';
+	env = ft_get_static_env();
+	ft_reset_term(env);
+	signal(SIGCONT, ft_check_signal);
+	signal(SIGTSTP, SIG_DFL);
+	ioctl(0, TIOCSTI, cp);
+}
+
+void			ft_event_foreground(int i)
+{
+	t_env	*env;
+
+	(void)i;
+	signal(SIGTSTP, ft_check_signal);
+	signal(SIGQUIT, ft_check_signal);
+	env = ft_get_static_env();
+	ft_init_term(env);
 }

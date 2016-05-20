@@ -82,6 +82,10 @@ int				ft_init_env(t_env *env, int argc, char **argv)
 
 void			ft_init_sig(void)
 {
-	signal(SIGWINCH, ft_event_resize_screen);
-	signal(SIGINT, ft_event_exit);
+	ft_check_signal(0);
+	signal(SIGWINCH, ft_check_signal);
+	signal(SIGINT, ft_check_signal);
+	signal(SIGTSTP, ft_check_signal);
+	signal(SIGCONT, ft_check_signal);
+	signal(SIGQUIT, ft_check_signal);
 }

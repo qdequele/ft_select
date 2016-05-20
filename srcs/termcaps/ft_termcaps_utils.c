@@ -31,8 +31,12 @@ void	ft_get_col_li(void)
 	t_env	*env;
 
 	env = ft_get_static_env();
+	env->nb_col = 0;
+	env->last_col = 0;
 	env->nb_col = (ft_lstcount(env->list) / env->wins.ws_row);
 	env->last_col = ft_lstcount(env->list) % env->wins.ws_row;
 	if (env->last_col != 0)
 		env->nb_col++;
+	else
+		env->last_col = env->wins.ws_row;
 }

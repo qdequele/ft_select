@@ -19,6 +19,7 @@
 # include <termios.h>
 # include <term.h>
 # include <stdio.h>
+# include <signal.h>
 # include <sys/ioctl.h>
 
 # define TOP ((buf[0] == 27 && buf[1] == 91 && buf[2] == 65))
@@ -91,6 +92,9 @@ void		ft_select(void);
 */
 void		ft_event_exit(int i);
 void		ft_event_resize_screen(int i);
+void		ft_event_background(int i);
+void		ft_event_foreground(int i);
+void		ft_check_signal(int i);
 /*
 **	ft_init.c
 */
@@ -99,6 +103,7 @@ int			ft_reset_term(t_env *env);
 int			ft_init_env(t_env *env, int argc, char **argv);
 t_env		*ft_get_static_env(void);
 void		ft_init_sig(void);
+void		ft_show_env(void);
 void		ft_show_list(void);
 void		ft_show_list_selected(void);
 void		ft_show_empty_list(void);
