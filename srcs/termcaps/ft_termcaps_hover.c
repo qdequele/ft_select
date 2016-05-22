@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include <ft_select.h>
 
 static t_item	*ft_get_name_at_index(t_env *env, int index)
 {

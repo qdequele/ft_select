@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include <ft_select.h>
 
 void	ft_show_list(void)
 {
@@ -66,16 +66,4 @@ void	ft_show_list_selected(void)
 		}
 	}
 	exit(0);
-}
-
-void	ft_show_empty_list(void)
-{
-	t_env	*env;
-
-	env = ft_get_static_env();
-	if (ft_lstcount(env->list) == 0)
-	{
-		ft_reset_term(env);
-		exit(0);
-	}
 }

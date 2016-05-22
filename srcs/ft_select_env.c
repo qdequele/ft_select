@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init.c                                          :+:      :+:    :+:   */
+/*   ft_select_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qdequele <qdequele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -22,6 +22,12 @@ static t_item	*ft_create_item(char *name)
 	return (item);
 }
 
+t_env	*ft_get_static_env(void)
+{
+	static t_env	env;
+	return (&env);
+}
+
 int				ft_init_term(t_env *env)
 {
 	char	buff_env[4096];
@@ -30,6 +36,8 @@ int				ft_init_term(t_env *env)
 		return (-1);
 	if (tgetent(buff_env, env->term_name) != 1)
 		return (-1);
+	if (tcgetattr(0, &(env->old_term)) == -1)
+		return (0);
 	if (tcgetattr(0, &(env->term)) == -1)
 		return (0);
 	env->term.c_lflag &= ~(ICANON);
@@ -49,6 +57,8 @@ int				ft_reset_term(t_env *env)
 		return (-1);
 	env->term.c_lflag = (ICANON | ECHO);
 	if (tcsetattr(0, 0, &(env->term)) == -1)
+		return (-1);
+	if (tcsetattr(0, 0, &(env->old_term)) == -1)
 		return (-1);
 	tputs(CLSTR, 0, ft_tputs);
 	tputs(VESTR, 0, ft_tputs);
@@ -78,14 +88,4 @@ int				ft_init_env(t_env *env, int argc, char **argv)
 		return (0);
 	else
 		return (1);
-}
-
-void			ft_init_sig(void)
-{
-	ft_check_signal(0);
-	signal(SIGWINCH, ft_check_signal);
-	signal(SIGINT, ft_check_signal);
-	signal(SIGTSTP, ft_check_signal);
-	signal(SIGCONT, ft_check_signal);
-	signal(SIGQUIT, ft_check_signal);
 }

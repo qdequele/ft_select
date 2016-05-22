@@ -57,6 +57,7 @@ typedef struct	s_env
 {
 	t_list		*list;
 	t_termios	term;
+	t_termios	old_term;
 	t_winsize	wins;
 	char		*term_name;
 	int			current_col;
@@ -67,15 +68,16 @@ typedef struct	s_env
 	int			count_select;
 }				t_env;
 /*
-**	termcaps.c
+**	TERMCAPS
 */
-int			ft_tputs(int c);
-int			ft_termcaps_catch_key(void);
 void		ft_hover(void (*f)(void));
+int			ft_termcaps_catch_key(void);
 void		ft_termcaps_remove(void);
+void		ft_select(void);
 void		ft_get_col_li(void);
+int			ft_tputs(int c);
 /*
-**	termcaps_move.c
+**	TERMCAPS MOVE
 */
 void		ft_termcaps_move_start(void);
 void		ft_termcaps_move_bottom(void);
@@ -84,27 +86,29 @@ void		ft_termcaps_move_left(void);
 void		ft_termcaps_move_right(void);
 void		ft_termcaps_move_stay(void);
 /*
-**	termcaps_select.c
-*/
-void		ft_select(void);
-/*
-**	ft_event.c
+**	EVENTS
 */
 void		ft_event_exit(int i);
 void		ft_event_resize_screen(int i);
 void		ft_event_background(int i);
 void		ft_event_foreground(int i);
-void		ft_check_signal(int i);
+void		ft_signal_handler(int i);
+void		ft_signals(void);
 /*
-**	ft_init.c
+**	ENV
 */
+t_env		*ft_get_static_env(void);
 int			ft_init_term(t_env *env);
 int			ft_reset_term(t_env *env);
 int			ft_init_env(t_env *env, int argc, char **argv);
-t_env		*ft_get_static_env(void);
-void		ft_init_sig(void);
-void		ft_show_env(void);
+/*
+**	ERRORS
+*/
+void		ft_show_empty_list(void);
+void		ft_print_error_size(t_env *env);
+/*
+**	SHOW
+*/
 void		ft_show_list(void);
 void		ft_show_list_selected(void);
-void		ft_show_empty_list(void);
 #endif

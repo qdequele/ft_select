@@ -10,42 +10,31 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
-
-static void		ft_print_error_size(t_env *env)
-{
-	ft_print_n_time('*', env->wins.ws_col);
-	ft_putchar('\n');
-	ft_print_n_time('*', (env->wins.ws_col - 11) / 2);
-	ft_putstr(" ft_select ");
-	ft_print_n_time('*', (env->wins.ws_col - 11) / 2);
-	ft_putchar('\n');
-	ft_print_n_time('*', env->wins.ws_col);
-	ft_putchar('\n');
-	ft_print_n_time(' ', (env->wins.ws_col - 43) / 2);
-	ft_putstr(" Your screen is too small, please resize it! ");
-	ft_print_n_time(' ', (env->wins.ws_col - 43) / 2);
-	ft_putchar('\n');
-}
+#include <ft_select.h>
 
 void			ft_event_resize_screen(int i)
 {
-	t_env	*env;
+	t_env		*env;
+	static int	index;
 
 	(void)i;
 	env = ft_get_static_env();
+	if ((env->nb_col * env->col_width) <= env->wins.ws_col)
+		index = (env->current_col * env->wins.ws_row) + env->current_line;
 	if (ioctl(0, TIOCGWINSZ, &(env->wins)) != -1)
 	{
 		tputs(CLSTR, 0, ft_tputs);
-		env->current_col = 0;
-		env->current_line = 0;
 		ft_get_col_li();
 		if ((env->nb_col * env->col_width) > env->wins.ws_col)
+		{
 			ft_print_error_size(env);
+		}
 		else
 		{
-			ft_termcaps_move_start();
 			ft_show_list();
+			env->current_col = index / env->wins.ws_row;
+			env->current_line = index % env->wins.ws_row;
+			ft_termcaps_move_stay();
 			ft_hover(ft_termcaps_move_stay);
 		}
 	}
@@ -56,8 +45,10 @@ void			ft_event_exit(int i)
 	t_env	*env;
 
 	(void)i;
+	printf("exit\n");
 	env = ft_get_static_env();
 	ft_reset_term(env);
+	signal(SIGQUIT, SIG_DFL);
 	exit (0);
 }
 
@@ -71,18 +62,26 @@ void			ft_event_background(int i)
 	cp[1] = '\0';
 	env = ft_get_static_env();
 	ft_reset_term(env);
-	signal(SIGCONT, ft_check_signal);
+	signal(SIGCONT, ft_signal_handler);
 	signal(SIGTSTP, SIG_DFL);
 	ioctl(0, TIOCSTI, cp);
 }
 
 void			ft_event_foreground(int i)
 {
-	t_env	*env;
+	t_env		*env;
+	static int	index;
 
 	(void)i;
-	signal(SIGTSTP, ft_check_signal);
-	signal(SIGQUIT, ft_check_signal);
+	signal(SIGTSTP, ft_signal_handler);
+	signal(SIGQUIT, ft_signal_handler);
 	env = ft_get_static_env();
 	ft_init_term(env);
+	index = (env->current_col * env->wins.ws_row) + env->current_line;
+	ft_show_list();
+	ft_get_col_li();
+	env->current_col = index / env->wins.ws_row;
+	env->current_line = index % env->wins.ws_row;
+	ft_termcaps_move_stay();
+	ft_hover(ft_termcaps_move_stay);
 }

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_termcaps_key.c                                  :+:      :+:    :+:   */
+/*   ft_select_errors.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qdequele <qdequele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,32 +12,32 @@
 
 #include <ft_select.h>
 
-int		ft_termcaps_catch_key(void)
+void	ft_show_empty_list(void)
 {
-	char	buf[3];
-	int		ret;
+	t_env	*env;
 
-	ft_show_empty_list();
-	ft_bzero(buf, 3);
-	while ((ret = read(0, buf, 3)) != -1)
+	env = ft_get_static_env();
+	if (ft_lstcount(env->list) == 0)
 	{
-		if (TOP)
-			ft_hover(ft_termcaps_move_top);
-		else if (BOTTOM)
-			ft_hover(ft_termcaps_move_bottom);
-		else if (RIGHT)
-			ft_hover(ft_termcaps_move_right);
-		else if (LEFT)
-			ft_hover(ft_termcaps_move_left);
-		else if (SPACE)
-			ft_select();
-		else if (BACK_SPACE || DELETE)
-			ft_termcaps_remove();
-		else if (ENTER)
-			ft_show_list_selected();
-		else if (ECHAP)
-			ft_event_exit(0);
-		ft_bzero(buf, 3);
+		ft_reset_term(env);
+		exit(0);
 	}
-	return (1);
+}
+
+
+
+void	ft_print_error_size(t_env *env)
+{
+	ft_print_n_time('*', env->wins.ws_col);
+	ft_putchar('\n');
+	ft_print_n_time('*', (env->wins.ws_col - 11) / 2);
+	ft_putstr(" ft_select ");
+	ft_print_n_time('*', (env->wins.ws_col - 11) / 2);
+	ft_putchar('\n');
+	ft_print_n_time('*', env->wins.ws_col);
+	ft_putchar('\n');
+	ft_print_n_time(' ', (env->wins.ws_col - 43) / 2);
+	ft_putstr(" Your screen is too small, please resize it! ");
+	ft_print_n_time(' ', (env->wins.ws_col - 43) / 2);
+	ft_putchar('\n');
 }

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_termcaps_key.c                                  :+:      :+:    :+:   */
+/*   ft_sigmal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qdequele <qdequele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,32 +12,26 @@
 
 #include <ft_select.h>
 
-int		ft_termcaps_catch_key(void)
+void	ft_signal_handler(int i)
 {
-	char	buf[3];
-	int		ret;
+	if (i == SIGINT || i == SIGQUIT || i == SIGKILL || i == SIGSTOP)
+		ft_event_exit(i);
+	else if (i == SIGTSTP)
+		ft_event_background(i);
+	else if (i == SIGCONT)
+		ft_event_foreground(i);
+	else if (i == SIGWINCH)
+		ft_event_resize_screen(i);
+	i = 0;
+}
 
-	ft_show_empty_list();
-	ft_bzero(buf, 3);
-	while ((ret = read(0, buf, 3)) != -1)
-	{
-		if (TOP)
-			ft_hover(ft_termcaps_move_top);
-		else if (BOTTOM)
-			ft_hover(ft_termcaps_move_bottom);
-		else if (RIGHT)
-			ft_hover(ft_termcaps_move_right);
-		else if (LEFT)
-			ft_hover(ft_termcaps_move_left);
-		else if (SPACE)
-			ft_select();
-		else if (BACK_SPACE || DELETE)
-			ft_termcaps_remove();
-		else if (ENTER)
-			ft_show_list_selected();
-		else if (ECHAP)
-			ft_event_exit(0);
-		ft_bzero(buf, 3);
-	}
-	return (1);
+void	ft_signals(void)
+{
+	signal(SIGINT, ft_signal_handler);
+	signal(SIGTSTP, ft_signal_handler);
+	signal(SIGCONT, ft_signal_handler);
+	signal(SIGQUIT, ft_signal_handler);
+	signal(SIGKILL, ft_signal_handler);
+	signal(SIGSTOP, ft_signal_handler);
+	signal(SIGWINCH, ft_signal_handler);
 }
