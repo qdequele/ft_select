@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_select_env.c                                          :+:      :+:    :+:   */
+/*   ft_select_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qdequele <qdequele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -22,9 +22,10 @@ static t_item	*ft_create_item(char *name)
 	return (item);
 }
 
-t_env	*ft_get_static_env(void)
+t_env			*ft_get_static_env(void)
 {
 	static t_env	env;
+
 	return (&env);
 }
 
@@ -81,7 +82,8 @@ int				ft_init_env(t_env *env, int argc, char **argv)
 	{
 		if ((int)ft_strlen(argv[i]) + 1 > env->col_width)
 			env->col_width = ft_strlen(argv[i]) + 1;
-		ft_lstaddend(&env->list, ft_lstnew(ft_create_item(argv[i]), sizeof(t_item)));
+		ft_lstaddend(&env->list,
+			ft_lstnew(ft_create_item(argv[i]), sizeof(t_item)));
 		i++;
 	}
 	if (ft_lstcount(env->list) == 0)

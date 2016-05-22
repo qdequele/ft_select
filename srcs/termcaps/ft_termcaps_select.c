@@ -39,11 +39,11 @@ static void	ft_set_selected(t_env *env)
 	}
 }
 
-void	ft_select(void)
+void		ft_select(void)
 {
 	t_env	*env;
-	int	tmp_current_col;
-	int tmp_current_line;
+	int		tmp_current_col;
+	int		tmp_current_line;
 
 	env = ft_get_static_env();
 	tmp_current_line = env->current_line;

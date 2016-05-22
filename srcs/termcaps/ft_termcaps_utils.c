@@ -18,12 +18,14 @@ int		ft_tputs(int c)
 	write(1, &c, 1);
 	return (1);
 }
-void		ft_termcaps_move_stay(void)
+
+void	ft_termcaps_move_stay(void)
 {
 	t_env	*env;
 
 	env = ft_get_static_env();
-	tputs(tgoto(CMSTR, (env->current_col * env->col_width), env->current_line), 1, ft_tputs);
+	tputs(tgoto(CMSTR, (env->current_col * env->col_width),
+		env->current_line), 1, ft_tputs);
 }
 
 void	ft_get_col_li(void)

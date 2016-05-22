@@ -33,7 +33,7 @@ _FT_LST_SRC			=	ft_lstnew.c ft_lstdelone.c ft_lstcount.c ft_lstdel.c\
 FT_LST_SRC			=	$(addprefix ft_lst/,$(_FT_LST_SRC))
 
 #Define FT_MATRIX
-_FT_MATRIX_SRC		= ft_matrix_create.c
+_FT_MATRIX_SRC		=	ft_matrix_create.c
 
 FT_MATRIX_SRC		=	$(addprefix ft_matrix/,$(_FT_MATRIX_SRC))
 

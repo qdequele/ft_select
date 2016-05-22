@@ -12,7 +12,7 @@
 
 #include <ft_select.h>
 
-int		ft_termcaps_catch_key(void)
+void	ft_termcaps_catch_key(void)
 {
 	char	buf[3];
 	int		ret;
@@ -39,5 +39,4 @@ int		ft_termcaps_catch_key(void)
 			ft_event_exit(0);
 		ft_bzero(buf, 3);
 	}
-	return (1);
 }

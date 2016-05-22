@@ -29,7 +29,7 @@ static t_item	*ft_get_name_at_index(t_env *env, int index)
 	return (NULL);
 }
 
-static void	ft_hover_item(t_item *item)
+static void		ft_hover_item(t_item *item)
 {
 	if (item != NULL)
 	{
@@ -46,7 +46,7 @@ static void	ft_hover_item(t_item *item)
 	}
 }
 
-static void	ft_unhover_item(t_item *item)
+static void		ft_unhover_item(t_item *item)
 {
 	if (item != NULL)
 	{
@@ -62,7 +62,7 @@ static void	ft_unhover_item(t_item *item)
 	}
 }
 
-void	ft_hover(void (*f)(void))
+void			ft_hover(void (*f)(void))
 {
 	t_env	*env;
 	int		index;
@@ -74,5 +74,6 @@ void	ft_hover(void (*f)(void))
 	index = (env->current_col * env->wins.ws_row) + env->current_line;
 	ft_hover_item(ft_get_name_at_index(env, index));
 	ft_get_col_li();
-	tputs(tgoto(CMSTR, (env->current_col * env->col_width), env->current_line), 1, ft_tputs);
+	tputs(tgoto(CMSTR, (env->current_col * env->col_width),
+		env->current_line), 1, ft_tputs);
 }

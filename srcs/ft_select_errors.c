@@ -24,8 +24,6 @@ void	ft_show_empty_list(void)
 	}
 }
 
-
-
 void	ft_print_error_size(t_env *env)
 {
 	ft_print_n_time('*', env->wins.ws_col);

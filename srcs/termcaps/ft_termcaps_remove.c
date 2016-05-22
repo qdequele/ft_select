@@ -38,7 +38,7 @@ static void	ft_remove_at_index(t_list **head, int index)
 	free(temp);
 }
 
-void	ft_termcaps_remove(void)
+void		ft_termcaps_remove(void)
 {
 	t_env	*env;
 	int		tmp_current_col;

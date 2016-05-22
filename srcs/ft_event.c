@@ -49,7 +49,7 @@ void			ft_event_exit(int i)
 	env = ft_get_static_env();
 	ft_reset_term(env);
 	signal(SIGQUIT, SIG_DFL);
-	exit (0);
+	exit(0);
 }
 
 void			ft_event_background(int i)
